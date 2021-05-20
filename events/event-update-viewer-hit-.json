@@ -1,0 +1,4 @@
+{
+    "httpMethod": "POST",
+    "body": "{\"siteUrl\": \"https:rodvind.io\",\"counter\": \"0\"}"
+}

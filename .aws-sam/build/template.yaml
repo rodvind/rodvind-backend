@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: sam-app
+Transform:
+- AWS::Serverless-2016-10-31
+Resources:
+  GetViewerHitFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-viewer-hits.getViewerHitsHandler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 100
+      Description: Get viewer hits from a DynamoDB table.
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: SiteVisits
+      Environment:
+        Variables:
+          COUNT_TABLE:
+            Ref: SiteVisits
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+      CodeUri: GetViewerHitFunction
+  UpdateViewerHitFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/update-viewer-hit.updateViewerHitsHandler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 100
+      Description: update viewr hits in DynamoDB table.
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: SiteVisits
+      Environment:
+        Variables:
+          COUNT_TABLE:
+            Ref: SiteVisits
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+      CodeUri: UpdateViewerHitFunction
+  SiteVisits:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: siteUrl
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+Outputs:
+  WebEndpoint:
+    Description: API Gateway endpoint URL for Prod stage
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/

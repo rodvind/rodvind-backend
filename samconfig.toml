@@ -1,0 +1,22 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "rodvind-backend"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1n8xgnpwas0kw"
+s3_prefix = "rodvind-backend"
+region = "us-east-1"
+profile = "iamadmin-nowmo"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+
+["env.json"]
+["env.json".deploy]
+["env.json".deploy.parameters]
+stack_name = "rodvind-backend"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1n8xgnpwas0kw"
+s3_prefix = "rodvind-backend"
+region = "us-east-1"
+profile = "iamadmin-nowmo"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
